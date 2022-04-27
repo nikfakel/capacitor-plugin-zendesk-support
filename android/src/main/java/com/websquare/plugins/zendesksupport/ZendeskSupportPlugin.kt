@@ -65,16 +65,7 @@ class ZendeskSupportPlugin : Plugin() {
 
     @PluginMethod
     fun showTicketRequest(call: PluginCall) {
-        val subject = call.getString("subject", "") ?: ""
-        var tags: List<String?> = ArrayList()
-        var fields: List<String> = ArrayList()
-        if (call.hasOption("tags")) {
-            tags = jsonArrayToList(call.getArray("tags"))
-        }
-        if (call.hasOption("fields")) {
-            fields = jsonArrayToList(call.getArray("fields"))
-        }
-        implementation.showTicketRequest(activity, subject, tags, fields)
+        implementation.showTicketRequest(activity)
         call.resolve()
     }
 

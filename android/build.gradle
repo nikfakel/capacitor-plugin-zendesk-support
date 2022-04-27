@@ -61,5 +61,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     //  zendesk sdk
     api( group: 'com.zendesk', name: 'support', version: '5.0.5')
-
+    implementation group: 'com.zendesk', name: 'chat', version: '3.3.4'
+    implementation group: 'com.zendesk', name: 'messaging', version: '5.2.3'
+//    api( group: 'com.zendesk', name: 'messaging', version: '5.2.3')
+//    api( group: 'com.zendesk', name: 'chat', version: '3.3.4')
+    // api( group: 'com.zendesk', name: 'answerbot', version: '3.0.7')
 }

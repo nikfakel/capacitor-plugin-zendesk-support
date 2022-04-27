@@ -14,9 +14,20 @@ import zendesk.support.request.RequestConfiguration
 import zendesk.support.request.RequestActivity
 import zendesk.support.CustomField
 import zendesk.support.requestlist.RequestListActivity
+import zendesk.chat.Chat;
+import zendesk.chat.ChatEngine;
+import zendesk.messaging.MessagingActivity;
 import java.util.ArrayList
 
 class ZendeskSupport {
+    fun showTicketRequest(context: Context) {
+        Chat.INSTANCE.init(context, "InqWFgdu4jxALOMqArAaONDLDZtFFmZV");
+        MessagingActivity.builder()
+            .withEngines(ChatEngine.engine())
+            .show(context);
+    }
+
+
     // initialize zendesk support sdk
     fun initialize(context: Context?, url: String?, appId: String?, clientId: String?, debugLog: Boolean) {
         Zendesk.INSTANCE.init(context!!, url!!, appId!!, clientId)
@@ -59,7 +70,7 @@ class ZendeskSupport {
         ViewArticleActivity.builder(articleId.toLong()).show(context!!)
     }
 
-    fun showTicketRequest(context: Context?, subject: String, tags: List<String?>, fields: List<String>) {
+    fun showTicketRequestOlDDDD(context: Context?, subject: String, tags: List<String?>, fields: List<String>) {
         var builder = RequestActivity.builder()
         if (subject.isNotEmpty()) {
             builder = builder.withRequestSubject(subject)
