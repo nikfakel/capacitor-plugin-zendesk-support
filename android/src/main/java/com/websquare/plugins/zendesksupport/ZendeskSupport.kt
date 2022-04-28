@@ -20,13 +20,12 @@ import zendesk.messaging.MessagingActivity;
 import java.util.ArrayList
 
 class ZendeskSupport {
-    fun showTicketRequest(context: Context) {
+    fun openChat(context: Context) {
         Chat.INSTANCE.init(context, "InqWFgdu4jxALOMqArAaONDLDZtFFmZV");
         MessagingActivity.builder()
             .withEngines(ChatEngine.engine())
             .show(context);
     }
-
 
     // initialize zendesk support sdk
     fun initialize(context: Context?, url: String?, appId: String?, clientId: String?, debugLog: Boolean) {
@@ -49,16 +48,12 @@ class ZendeskSupport {
     }
 
     fun showHelpCenter(context: Context?, groupBy: String, groupIds: List<Long?>, labels: List<String?>) {
-//        Show Help Center Builder
         var builder = HelpCenterActivity.builder()
         if ("category" == groupBy && groupIds.isNotEmpty()) {
-//            Filter articles by category
             builder = builder.withArticlesForCategoryIds(groupIds)
         } else if ("section" == groupBy && groupIds.isNotEmpty()) {
-//            Filter articles by section
             builder = builder.withArticlesForSectionIds(groupIds)
         }
-        //        Filter articles by label
         if (labels.isNotEmpty()) {
             builder = builder.withLabelNames(labels)
         }
@@ -66,32 +61,7 @@ class ZendeskSupport {
     }
 
     fun showHelpCenterArticle(context: Context?, articleId: String) {
-//        Show a single article Builder
         ViewArticleActivity.builder(articleId.toLong()).show(context!!)
-    }
-
-    fun showTicketRequestOlDDDD(context: Context?, subject: String, tags: List<String?>, fields: List<String>) {
-        var builder = RequestActivity.builder()
-        if (subject.isNotEmpty()) {
-            builder = builder.withRequestSubject(subject)
-        }
-        if (tags.isNotEmpty()) {
-            builder = builder.withTags(tags)
-        }
-        if (fields.isNotEmpty()) {
-            val mappedFields: ArrayList<CustomField?> = ArrayList()
-            for (field in fields) {
-                val fieldParts = field.split("\\|".toRegex()).toTypedArray()
-                if (fieldParts.size == 2) {
-                    val fieldId = fieldParts[0].toLong()
-                    val fieldValue = fieldParts[1]
-                    val customField = CustomField(fieldId, fieldValue)
-                    mappedFields.add(customField)
-                }
-            }
-            builder = builder.withCustomFields(mappedFields)
-        }
-        builder.show(context!!)
     }
 
     fun showUserTickets(context: Context?) {

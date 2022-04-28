@@ -17,8 +17,9 @@ npx cap sync
 * [`setAnonymousIdentity(...)`](#setanonymousidentity)
 * [`setIdentity(...)`](#setidentity)
 * [`showHelpCenter(...)`](#showhelpcenter)
-* [`showTicketRequest(...)`](#showticketrequest)
+* [`openChat(...)`](#openchat)
 * [`showUserTickets()`](#showusertickets)
+* [`closeChat()`](#closechat)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -78,10 +79,10 @@ showHelpCenter(options?: HelpCenterOptions | undefined) => Promise<void>
 --------------------
 
 
-### showTicketRequest(...)
+### openChat(...)
 
 ```typescript
-showTicketRequest(options?: TicketRequestOptions | undefined) => Promise<void>
+openChat(options?: TicketRequestOptions | undefined) => Promise<void>
 ```
 
 | Param         | Type                                                                  |
@@ -100,17 +101,27 @@ showUserTickets() => Promise<void>
 --------------------
 
 
+### closeChat()
+
+```typescript
+closeChat() => Promise<void>
+```
+
+--------------------
+
+
 ### Interfaces
 
 
 #### InitializeOptions
 
-| Prop             | Type                 |
-| ---------------- | -------------------- |
-| **`zendeskUrl`** | <code>string</code>  |
-| **`appId`**      | <code>string</code>  |
-| **`clientId`**   | <code>string</code>  |
-| **`debugLog`**   | <code>boolean</code> |
+| Prop              | Type                 |
+| ----------------- | -------------------- |
+| **`zendeskUrl`**  | <code>string</code>  |
+| **`appId`**       | <code>string</code>  |
+| **`clientId`**    | <code>string</code>  |
+| **`webClientId`** | <code>string</code>  |
+| **`debugLog`**    | <code>boolean</code> |
 
 
 #### AnonymousOptions

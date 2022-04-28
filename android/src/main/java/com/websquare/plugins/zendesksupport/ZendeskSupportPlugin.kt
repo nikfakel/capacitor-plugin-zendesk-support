@@ -64,8 +64,9 @@ class ZendeskSupportPlugin : Plugin() {
     }
 
     @PluginMethod
-    fun showTicketRequest(call: PluginCall) {
-        implementation.showTicketRequest(activity)
+    fun openChat(call: PluginCall) {
+        val chatId = call.getString("chatId", "")
+        implementation.openChat(activity)
         call.resolve()
     }
 
