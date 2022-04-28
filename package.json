@@ -17,15 +17,16 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asad-96/capacitor-plugin-zendesk-support.git.git"
+    "url": "git+https://github.com/nikfakel/capacitor-plugin-zendesk-support.git.git"
   },
   "bugs": {
-    "url": "https://github.com/asad-96/capacitor-plugin-zendesk-support.git/issues"
+    "url": "https://github.com/nikfakel/capacitor-plugin-zendesk-support.git/issues"
   },
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "zendesk"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",

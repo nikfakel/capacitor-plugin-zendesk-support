@@ -7,6 +7,7 @@ export class ZendeskSupportWeb
   implements ZendeskSupportPlugin {
 
   async initialize(options: InitializeOptions): Promise<void> {
+    console.log(options);
     const scriptUrl = `https://static.zdassets.com/ekr/snippet.js?key=${options.webClientId}`;
     const node = document.createElement('script');
     node.src = scriptUrl;

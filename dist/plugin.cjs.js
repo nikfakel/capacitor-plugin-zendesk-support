@@ -10,6 +10,7 @@ const ZendeskSupport = core.registerPlugin('ZendeskSupport', {
 
 class ZendeskSupportWeb extends core.WebPlugin {
     async initialize(options) {
+        console.log(options);
         const scriptUrl = `https://static.zdassets.com/ekr/snippet.js?key=${options.webClientId}`;
         const node = document.createElement('script');
         node.src = scriptUrl;

@@ -1,6 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
 export class ZendeskSupportWeb extends WebPlugin {
     async initialize(options) {
+        console.log(options);
         const scriptUrl = `https://static.zdassets.com/ekr/snippet.js?key=${options.webClientId}`;
         const node = document.createElement('script');
         node.src = scriptUrl;
