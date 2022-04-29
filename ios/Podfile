@@ -10,6 +10,13 @@ end
 target 'Plugin' do
   capacitor_pods
   pod 'ZendeskSupportSDK'
+
+  # Unified SDK is a sub-dependency of each of the product SDK
+  # pods(`ZendeskAnswerBotSDK`, `ZendeskChatSDK` and `ZendeskSupportSDK`).
+
+  pod 'ZendeskAnswerBotSDK' # AnswerBot-only on the Unified SDK
+  pod 'ZendeskChatSDK'      # Chat-only on the Unified SDK
+  pod 'ZendeskSupportSDK'   # Support-only on the Unified SDK
 end
 
 target 'PluginTests' do
