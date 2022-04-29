@@ -11,12 +11,18 @@ export class HomePage implements OnInit{
   constructor() {}
 
   async ngOnInit() {
-    await ZendeskSupport.initialize({appId: 'c17460eb60cfa285accdb580d2dadf104f96f2d2d630e76b', clientId: 'mobile_sdk_client_cab705e2c6ff2b9f32a8', zendeskUrl: 'https://purematrimony.zendesk.com', debugLog: false});
+    await this.initialize();
     await ZendeskSupport.setIdentity({token: '200182'});
   }
 
   async initialize() {
-    await ZendeskSupport.initialize({appId: 'c17460eb60cfa285accdb580d2dadf104f96f2d2d630e76b', clientId: 'mobile_sdk_client_cab705e2c6ff2b9f32a8', zendeskUrl: 'https://purematrimony.zendesk.com', debugLog: false});
+    await ZendeskSupport.initialize({
+      appId: 'b35e6558d3ecac4ef0a85fa5f9780b953939f6bcd39be038',
+      clientId: 'mobile_sdk_client_3ee565581b3e13653c7f',
+      zendeskUrl: 'https://koten.zendesk.com',
+      webClientId: '62ab5ec6-4919-47d4-a979-00a53b15ee42',
+      debugLog: true
+    });
   }
 
   async openHelpCenter() {
@@ -27,9 +33,9 @@ export class HomePage implements OnInit{
     }
   }
 
-  async submitRequest() {
+  async openChat() {
     try {
-      await ZendeskSupport.showTicketRequest();
+      await ZendeskSupport.openChat();
     } catch (error) {
       console.log(error);
     }
