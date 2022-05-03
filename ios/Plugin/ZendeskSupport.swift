@@ -17,17 +17,17 @@ import SDKConfigurations
         }
         Support.initialize(withZendesk: Zendesk.instance)
     }
-    
+
     @objc public func setAnonymousIdentity(_ name: String,_ email: String) {
         let identity = Identity.createAnonymous(name: name, email: email)
         Zendesk.instance?.setIdentity(identity)
     }
-    
+
     @objc public func setIdentity(_ token: String) {
         let identity = Identity.createJwt(token: token)
         Zendesk.instance?.setIdentity(identity)
     }
-    
+
     @objc public func showHelpCenter(_ viewCtrl: UIViewController?,_ groupBy: String,_ groupIds: [NSNumber],_ labels: [String]) {
         let hcConfig = HelpCenterUiConfiguration()
         // Filter articles by group type
@@ -43,15 +43,15 @@ import SDKConfigurations
         if (!labels.isEmpty) {
             hcConfig.labels = labels
         }
-        
+
         DispatchQueue.main.async {
             let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
             let navController = UINavigationController(rootViewController: helpCenter)
             viewCtrl?.present(navController, animated: true, completion: nil)
-            
+
         }
     }
-    
+
     @objc public func showHelpCenterArticle(_ viewCtrl: UIViewController?, _ articleId: String) {
         DispatchQueue.main.async {
             let articleController = HelpCenterUi.buildHelpCenterArticleUi(withArticleId: articleId, andConfigs: [])
@@ -59,7 +59,7 @@ import SDKConfigurations
             viewCtrl?.present(navController, animated: true, completion: nil)
         }
     }
-    
+
     @objc public func showTicketRequest(_ viewCtrl: UIViewController?,_ subject: String,_ tags: [String],_ fields: [String]) {
             let requestConfig = RequestUiConfiguration()
         if (!subject.isEmpty) {
@@ -75,19 +75,19 @@ import SDKConfigurations
                 if (fieldParts.count == 2) {
                     let fieldId = (fieldParts[0] as NSString).longLongValue
                     let fieldValue = fieldParts[1]
-                    
+
                     mappedFields.append(CustomField(fieldId: fieldId, value: fieldValue))
                 }
             }
         }
-        
+
         DispatchQueue.main.async {
             let requestController = RequestUi.buildRequestUi(with: [requestConfig])
             let navController = UINavigationController(rootViewController: requestController)
             viewCtrl?.present(navController, animated: true, completion: nil)
         }
     }
-    
+
     @objc public func showUserTickets(_ viewCtrl: UIViewController?) {
         DispatchQueue.main.async {
             let requestListController = RequestUi.buildRequestList()
