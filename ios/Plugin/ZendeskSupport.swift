@@ -2,6 +2,12 @@ import Foundation
 import SupportSDK
 import ZendeskCoreSDK
 
+import ChatSDK
+import ChatProvidersSDK
+import MessagingSDK
+import MessagingAPI
+import SDKConfigurations
+
 @objc public class ZendeskSupport: NSObject {
     @objc public func initialize(_ appId: String,_ clientId: String,_ zendeskUrl: String,_ debugLog: Bool) throws {
         Zendesk.initialize(appId: appId, clientId: clientId, zendeskUrl: zendeskUrl)
@@ -88,5 +94,18 @@ import ZendeskCoreSDK
             let navController = UINavigationController(rootViewController: requestListController)
             viewCtrl?.present(navController, animated: true, completion: nil)
         }
+    }
+
+    @objc public func openChat() throws {
+    	let messagingConfiguration = MessagingConfiguration()
+//    	let answerBotEngine = try AnswerBotEngine.engine()
+//    	let supportEngine = try SupportEngine.engine()
+    	let chatEngine = try ChatEngine.engine()
+    	let viewController = try Messaging.instance.buildUI(engines: [chatEngine],
+    		configs: [messagingConfiguration])
+        
+        let requestListController = RequestUi.buildRequestList()
+        let navController = UINavigationController(rootViewController: requestListController)
+        navController.pushViewController(viewController, animated: true)
     }
 }

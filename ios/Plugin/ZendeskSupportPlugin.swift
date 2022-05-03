@@ -102,4 +102,10 @@ public class ZendeskSupportPlugin: CAPPlugin, UINavigationControllerDelegate {
     @objc func showUserTickets(_ call: CAPPluginCall) {
         implementation.showUserTickets(bridge?.viewController)
     }
+    
+    @objc func openChat(_ call: CAPPluginCall) {
+        do {
+            try implementation.openChat()
+        } catch {}
+    }
 }
