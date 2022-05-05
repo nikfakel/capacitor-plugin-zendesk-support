@@ -104,8 +104,13 @@ public class ZendeskSupportPlugin: CAPPlugin, UINavigationControllerDelegate {
     }
     
     @objc func openChat(_ call: CAPPluginCall) {
+        guard let bridge = self.bridge else {
+            call.resolve()
+            return
+        }
+        
         do {
-            try implementation.openChat()
+            try implementation.openChat(bridge.viewController)
         } catch {}
     }
 }

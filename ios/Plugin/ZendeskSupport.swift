@@ -96,16 +96,16 @@ import SDKConfigurations
         }
     }
 
-    @objc public func openChat() throws {
+    @objc public func openChat(_ viewCtrl: UIViewController?) throws {
     	let messagingConfiguration = MessagingConfiguration()
 //    	let answerBotEngine = try AnswerBotEngine.engine()
 //    	let supportEngine = try SupportEngine.engine()
     	let chatEngine = try ChatEngine.engine()
-    	let viewController = try Messaging.instance.buildUI(engines: [chatEngine],
-    		configs: [messagingConfiguration])
+    	let viewController = try Messaging.instance.buildUI(engines: [chatEngine], configs: [messagingConfiguration])
         
-        let requestListController = RequestUi.buildRequestList()
-        let navController = UINavigationController(rootViewController: requestListController)
-        navController.pushViewController(viewController, animated: true)
+//        let requestListController = RequestUi.buildRequestList()
+//        let navController = UINavigationController(rootViewController: requestListController)
+        viewCtrl?.present(viewController, animated: true)
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
