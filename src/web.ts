@@ -32,6 +32,7 @@ export class ZendeskSupportWeb
   }
 
   async showHelpCenter(options: HelpCenterOptions): Promise<void> {
+    console.log('open chat replaced');
     console.log('showHelpCenter not implemented on web yet!', options);
   }
 

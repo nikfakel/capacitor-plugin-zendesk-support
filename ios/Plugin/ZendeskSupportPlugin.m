@@ -11,4 +11,5 @@ CAP_PLUGIN(ZendeskSupportPlugin, "ZendeskSupport",
            CAP_PLUGIN_METHOD(showHelpCenterArticle, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(showTicketRequest, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(showUserTickets, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(openChat, CAPPluginReturnPromise);
 )

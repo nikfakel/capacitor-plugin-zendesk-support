@@ -4,6 +4,9 @@ import ZendeskCoreSDK
 
 import ChatSDK
 import ChatProvidersSDK
+import ZendeskCoreSDK
+import SupportProvidersSDK
+import AnswerBotProvidersSDK
 import MessagingSDK
 import MessagingAPI
 import SDKConfigurations
@@ -28,28 +31,23 @@ import SDKConfigurations
         Zendesk.instance?.setIdentity(identity)
     }
 
-    @objc public func showHelpCenter(_ viewCtrl: UIViewController?,_ groupBy: String,_ groupIds: [NSNumber],_ labels: [String]) {
-        let hcConfig = HelpCenterUiConfiguration()
-        // Filter articles by group type
-        if ("category" == groupBy && !groupIds.isEmpty) {
-            hcConfig.groupType = .category
-            hcConfig.groupIds = groupIds
-        } else if ("section" == groupBy && !groupIds.isEmpty) {
-            hcConfig.groupType = .section
-            hcConfig.groupIds = groupIds
-        }
+    @objc public func showHelpCenter(_ viewCtrl: UIViewController?) throws {
+       
+        let title = "Title...!"
+        let message = "Message..."
+        UIAlertController(title: title, message: message, preferredStyle: .alert)
+               
+        
+         let messagingConfiguration = MessagingConfiguration()
+//        let answerBotEngine = try AnswerBotEngine.engine()
+        //let supportEngine = try SupportEngine.engine()
+         let chatEngine = try ChatEngine.engine()
+         let viewController = try Messaging.instance.buildUI(engines: [chatEngine], configs: [messagingConfiguration])
 
-        // Filter articles by label
-        if (!labels.isEmpty) {
-            hcConfig.labels = labels
-        }
-
-        DispatchQueue.main.async {
-            let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
-            let navController = UINavigationController(rootViewController: helpCenter)
-            viewCtrl?.present(navController, animated: true, completion: nil)
-
-        }
+        let requestListController = RequestUi.buildRequestList()
+        let navController = UINavigationController(rootViewController: requestListController)
+        viewCtrl?.present(viewController, animated: true)
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
 
     @objc public func showHelpCenterArticle(_ viewCtrl: UIViewController?, _ articleId: String) {
@@ -97,14 +95,19 @@ import SDKConfigurations
     }
 
     @objc public func openChat(_ viewCtrl: UIViewController?) throws {
-    	let messagingConfiguration = MessagingConfiguration()
-//    	let answerBotEngine = try AnswerBotEngine.engine()
-//    	let supportEngine = try SupportEngine.engine()
-    	let chatEngine = try ChatEngine.engine()
-    	let viewController = try Messaging.instance.buildUI(engines: [chatEngine], configs: [messagingConfiguration])
+        let title = "Title...!"
+        let message = "Message..."
+        let myAlert_ = UIAlertController(title: title, message: message, preferredStyle: .alert)
+               
         
-//        let requestListController = RequestUi.buildRequestList()
-//        let navController = UINavigationController(rootViewController: requestListController)
+    	 let messagingConfiguration = MessagingConfiguration()
+//    	let answerBotEngine = try AnswerBotEngine.engine()
+//    let supportEngine = try SupportEngine.engine()
+    	 let chatEngine = try ChatEngine.engine()
+     	let viewController = try Messaging.instance.buildUI(engines: [chatEngine], configs: [messagingConfiguration])
+
+        let requestListController = RequestUi.buildRequestList()
+        let navController = UINavigationController(rootViewController: requestListController)
         viewCtrl?.present(viewController, animated: true)
 //        self.navigationController?.pushViewController(viewController, animated: true)
     }

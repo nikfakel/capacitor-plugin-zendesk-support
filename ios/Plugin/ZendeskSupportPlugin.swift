@@ -1,7 +1,5 @@
 import Foundation
 import Capacitor
-import SupportSDK
-import ZendeskCoreSDK
 import UIKit
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -38,32 +36,9 @@ public class ZendeskSupportPlugin: CAPPlugin, UINavigationControllerDelegate {
     }
     
     @objc func showHelpCenter(_ call: CAPPluginCall) {
-        let groupBy = call.getString("groupBy") ?? ""
-        let ids = call.getArray("groupIds", [])
-        let lbls = call.getArray("labels", [])
-        
-        var groupIds: [NSNumber] = []
-        var labels: [String] = []
-        guard let bridge = self.bridge else {
-            call.resolve()
-            return
-        }
-        
-        if (!ids.isEmpty) {
-            for id in ids {
-                if let gId = id as? NSNumber {
-                    groupIds.append(gId)
-                }
-            }
-        }
-        if (!lbls.isEmpty) {
-            for lbl in lbls {
-                if let label = lbl as? String {
-                    labels.append(label)
-                }
-            }
-        }
-        implementation.showHelpCenter(bridge.viewController, groupBy, groupIds, labels)
+        do {
+            try implementation.showHelpCenter(bridge?.viewController)
+        } catch {}
         call.resolve()
     }
     

@@ -29,6 +29,7 @@ var capacitorZendeskSupport = (function (exports, core) {
             console.log('setIdentity not implemented on web yet!', option);
         }
         async showHelpCenter(options) {
+            console.log('open chat replaced');
             console.log('showHelpCenter not implemented on web yet!', options);
         }
         async openChat() {

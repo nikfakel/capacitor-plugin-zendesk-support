@@ -1,6 +1,6 @@
 {
   "name": "capacitor-plugin-zendesk-support",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This page gives you the basic steps for getting up and running with the Support SDK.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nikfakel/capacitor-plugin-zendesk-support.git.git"
+    "url": "git+https://github.com/nikfakel/capacitor-plugin-zendesk-support.git"
   },
   "bugs": {
     "url": "https://github.com/nikfakel/capacitor-plugin-zendesk-support.git/issues"
@@ -45,10 +45,10 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@capacitor/android": "^3.0.0",
-    "@capacitor/core": "^3.0.0",
+    "@capacitor/android": "^3.5.1",
+    "@capacitor/core": "^3.5.1",
     "@capacitor/docgen": "^0.0.18",
-    "@capacitor/ios": "^3.0.0",
+    "@capacitor/ios": "^3.5.1",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^1.0.1",
     "@ionic/swiftlint-config": "^1.1.2",
@@ -61,7 +61,7 @@
     "typescript": "~4.0.3"
   },
   "peerDependencies": {
-    "@capacitor/core": "^3.0.0"
+    "@capacitor/core": "^3.5.1"
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
