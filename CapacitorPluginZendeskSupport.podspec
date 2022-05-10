@@ -14,6 +14,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target  = '12.0'
   s.dependency 'Capacitor'
   s.dependency 'ZendeskSupportSDK'
+  s.dependency 'ZendeskAnswerBotSDK' # AnswerBot-only on the Unified SDK
+  s.dependency 'ZendeskChatSDK' 
   s.source = { :git => 'https://github.com/zendesk/support_sdk_ios'}
   s.swift_version = '5.1'
 end
