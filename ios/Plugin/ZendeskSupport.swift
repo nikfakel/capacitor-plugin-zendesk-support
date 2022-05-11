@@ -5,6 +5,7 @@ import SupportSDK
 import SupportProvidersSDK
 import ChatSDK
 import ChatProvidersSDK
+import AnswerBotSDK
 import AnswerBotProvidersSDK
 import MessagingSDK
 import MessagingAPI
@@ -19,7 +20,7 @@ import MessagingAPI
         Zendesk.initialize(appId: appId, clientId: clientId, zendeskUrl: zendeskUrl)
         Support.initialize(withZendesk: Zendesk.instance)
         AnswerBot.initialize(withZendesk: Zendesk.instance, support: Support.instance!)
-        Chat.initialize(massagingId: messagingId)
+        Chat.initialize(accountKey: messagingId, appId: appId)
     }
 
     @objc public func setAnonymousIdentity(_ name: String,_ email: String) {
