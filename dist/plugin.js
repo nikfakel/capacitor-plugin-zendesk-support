@@ -7,7 +7,6 @@ var capacitorZendeskSupport = (function (exports, core) {
 
     class ZendeskSupportWeb extends core.WebPlugin {
         async initialize(options) {
-            console.log(options);
             const scriptUrl = `https://static.zdassets.com/ekr/snippet.js?key=${options.webClientId}`;
             const node = document.createElement('script');
             node.src = scriptUrl;
@@ -28,16 +27,9 @@ var capacitorZendeskSupport = (function (exports, core) {
         async setIdentity(option) {
             console.log('setIdentity not implemented on web yet!', option);
         }
-        async showHelpCenter(options) {
-            console.log('open chat replaced');
-            console.log('showHelpCenter not implemented on web yet!', options);
-        }
         async openChat() {
             window.zE('webWidget', 'open');
             window.zE('webWidget', 'show');
-        }
-        async showUserTickets() {
-            console.log('showUserTickets not implemented on web yet!');
         }
         async closeChat() {
             window.zE('webWidget', 'close');
