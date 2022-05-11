@@ -1,6 +1,7 @@
 # node files
 
 node_modules
+zendesk-support-plugin-example/node_modules
 
 # iOS files
 Pods
