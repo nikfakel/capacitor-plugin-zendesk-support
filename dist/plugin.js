@@ -15,10 +15,34 @@ var capacitorZendeskSupport = (function (exports, core) {
             node.id = 'ze-snippet';
             document.getElementsByTagName('head')[0].appendChild(node);
             node.addEventListener('load', () => {
-                window.zE('webWidget', 'hide');
-                window.zE('webWidget:on', 'close', function () {
-                    window.zE('webWidget', 'hide');
-                });
+                const bodyNode = document.querySelector('body');
+                if (bodyNode) {
+                    waitForAddedNode({
+                        parent: bodyNode,
+                        recursive: false,
+                        done: function (el) {
+                            window.zE('messenger:set', 'zIndex', -999);
+                            const parentNode = el.parentElement;
+                            if (parentNode) {
+                                const chatNode = parentNode.querySelector('iframe');
+                                if (chatNode) {
+                                    new MutationObserver((mutationsList) => {
+                                        for (let mutation of mutationsList) {
+                                            if (mutation.type === 'attributes' && mutation.attributeName === "style" && mutation.oldValue) {
+                                                if (!mutation.oldValue.includes('display: none')) {
+                                                    window.zE('messenger:set', 'zIndex', -999);
+                                                }
+                                            }
+                                        }
+                                    }).observe(chatNode, {
+                                        attributes: true,
+                                        attributeOldValue: true
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
             });
         }
         async setAnonymousIdentity(options) {
@@ -28,12 +52,30 @@ var capacitorZendeskSupport = (function (exports, core) {
             console.log('setIdentity not implemented on web yet!', option);
         }
         async openChat() {
-            window.zE('webWidget', 'open');
-            window.zE('webWidget', 'show');
+            try {
+                window.zE('messenger', 'open');
+                window.zE('messenger:set', 'zIndex', 999);
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
         async closeChat() {
-            window.zE('webWidget', 'close');
+            window.zE('messenger:set', 'zIndex', -999);
         }
+    }
+    function waitForAddedNode(params) {
+        new MutationObserver(function () {
+            const el = document.querySelectorAll('iframe')[1];
+            if (el) {
+                // @ts-ignore
+                this.disconnect();
+                params.done(el);
+            }
+        }).observe(params.parent || document, {
+            subtree: !!params.recursive || !params.parent,
+            childList: true,
+        });
     }
 
     var web = /*#__PURE__*/Object.freeze({

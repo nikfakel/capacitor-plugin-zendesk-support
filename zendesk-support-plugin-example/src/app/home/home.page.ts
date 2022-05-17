@@ -7,7 +7,6 @@ import { ZendeskSupport } from "capacitor-plugin-zendesk-support";
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
   constructor() {
   }
 
@@ -24,7 +23,7 @@ export class HomePage implements OnInit {
       zendeskUrl: 'https://koten.zendesk.com',
       iosChatId: 'sdf',
       androidChatId: 'sddf',
-      webClientId: '62ab5ec6-4919-47d4-a979-00a53b15ee42',
+      webClientId: '0d1e2d85-7322-4ac7-ba85-642292a5727e',
       debugLog: true
     });
   }
@@ -34,6 +33,7 @@ export class HomePage implements OnInit {
       await ZendeskSupport.openChat();
     } catch (error) {
       console.log(error);
+      console.log('w');
     }
   }
 }

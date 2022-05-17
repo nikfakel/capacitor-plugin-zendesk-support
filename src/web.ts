@@ -15,11 +15,36 @@ export class ZendeskSupportWeb
     node.id = 'ze-snippet';
     document.getElementsByTagName('head')[0].appendChild(node);
     node.addEventListener('load', () => {
-      window.zE('webWidget', 'hide');
-      window.zE('webWidget:on', 'close', function () {
-        window.zE('webWidget', 'hide');
-      });
-    });
+      const bodyNode = document.querySelector('body');
+      if (bodyNode) {
+        waitForAddedNode({
+          parent: bodyNode,
+          recursive: false,
+          done: function (el) {
+            window.zE('messenger:set', 'zIndex', -999);
+            const parentNode = el.parentElement;
+            if (parentNode) {
+              const chatNode = parentNode.querySelector('iframe');
+
+              if (chatNode) {
+                new MutationObserver((mutationsList) => {
+                  for (let mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === "style" && mutation.oldValue) {
+                      if (!mutation.oldValue.includes('display: none')) {
+                        window.zE('messenger:set', 'zIndex', -999);
+                      }
+                    }
+                  }
+                }).observe(chatNode, {
+                  attributes: true,
+                  attributeOldValue: true
+                })
+              }
+            }
+          }
+        });
+      }
+    })
   }
 
   async setAnonymousIdentity(options: AnonymousOptions): Promise<void> {
@@ -30,12 +55,33 @@ export class ZendeskSupportWeb
     console.log('setIdentity not implemented on web yet!', option);
   }
 
-  async openChat(): Promise<void> {
-    window.zE('webWidget', 'open');
-    window.zE('webWidget', 'show');
-  }
 
-  async closeChat(): Promise<void> {
-    window.zE('webWidget', 'close');
+  async openChat() {
+    try {
+      window.zE('messenger', 'open');
+      window.zE('messenger:set', 'zIndex', 999);
+    } catch (error) {
+      console.log(error);
+    }
   }
+}
+
+interface IWaitForAddedNodeParams {
+  parent: Node;
+  recursive: boolean;
+  done: (el: Node) => void;
+}
+
+function waitForAddedNode(params: IWaitForAddedNodeParams) {
+  new MutationObserver(function() {
+    const el = document.querySelectorAll('iframe')[1];
+    if (el) {
+      // @ts-ignore
+      this.disconnect();
+      params.done(el);
+    }
+  }).observe(params.parent || document, {
+    subtree: !!params.recursive || !params.parent,
+    childList: true,
+  });
 }
