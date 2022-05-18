@@ -13,17 +13,17 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     await this.initialize();
 
-    await ZendeskSupport.setIdentity({token: '200182'});
+    // await ZendeskSupport.setAnonymousIdentity({ name: 'tets pid', email: "nikfakel@gmail.com" });
   }
 
   async initialize() {
     await ZendeskSupport.initialize({
-      appId: 'b35e6558d3ecac4ef0a85fa5f9780b953939f6bcd39be038',
-      clientId: 'mobile_sdk_client_3ee565581b3e13653c7f',
-      zendeskUrl: 'https://koten.zendesk.com',
-      iosChatId: 'sdf',
-      androidChatId: 'sddf',
-      webClientId: '0d1e2d85-7322-4ac7-ba85-642292a5727e',
+      appId: '8b2441ab061feb902a75f2a9cdb53c209aa3ab98ad433a5e',
+      clientId: 'mobile_sdk_client_9c45bfe7532f5e0004f7',
+      zendeskUrl: 'https://sasha800i.zendesk.com',
+      iosChatId: 'eyJzZXR0aW5nc191cmwiOiJodHRwczovL3Nhc2hhODAwaS56ZW5kZXNrLmNvbS9tb2JpbGVfc2RrX2FwaS9zZXR0aW5ncy8wMUczQlBGNTI2M1hUR0tUTjVXRTZFWUtKWS5qc29uIn0=',
+      androidChatId: 'eyJzZXR0aW5nc191cmwiOiJodHRwczovL3Nhc2hhODAwaS56ZW5kZXNrLmNvbS9tb2JpbGVfc2RrX2FwaS9zZXR0aW5ncy8wMUczQkc4TkVaUlk4VzRBRks2RUM2TTQzNi5qc29uIn0=',
+      webClientId: '5d7b20cd-408b-4557-a513-f35afbbcaef4',
       debugLog: true
     });
   }
@@ -33,7 +33,6 @@ export class HomePage implements OnInit {
       await ZendeskSupport.openChat();
     } catch (error) {
       console.log(error);
-      console.log('w');
     }
   }
 }
