@@ -17,7 +17,6 @@ npx cap sync
 * [`setAnonymousIdentity(...)`](#setanonymousidentity)
 * [`setIdentity(...)`](#setidentity)
 * [`openChat()`](#openchat)
-* [`closeChat()`](#closechat)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -68,15 +67,6 @@ setIdentity(option: IdentityOption) => Promise<void>
 
 ```typescript
 openChat() => Promise<void>
-```
-
---------------------
-
-
-### closeChat()
-
-```typescript
-closeChat() => Promise<void>
 ```
 
 --------------------

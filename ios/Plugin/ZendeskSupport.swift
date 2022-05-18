@@ -1,61 +1,37 @@
 import Foundation
-import SDKConfigurations
-import ZendeskCoreSDK
-import SupportSDK
-import SupportProvidersSDK
-import ChatSDK
-import ChatProvidersSDK
-import AnswerBotSDK
-import AnswerBotProvidersSDK
-import MessagingSDK
-import MessagingAPI
+import ZendeskSDKMessaging
+import ZendeskSDK
 
 @objc public class ZendeskSupport: NSObject {
-    @objc public func initialize(_ appId: String,_ clientId: String,_ zendeskUrl: String,_ messagingId: String,_ debugLog: Bool) throws {
-        if (debugLog) {
-            CoreLogger.enabled = debugLog
-            CoreLogger.logLevel = .debug
-        }
-        
-        Zendesk.initialize(appId: appId, clientId: clientId, zendeskUrl: zendeskUrl)
-        Support.initialize(withZendesk: Zendesk.instance)
-        AnswerBot.initialize(withZendesk: Zendesk.instance, support: Support.instance!)
-        Chat.initialize(accountKey: messagingId, appId: appId)
+    @objc public func initialize(_ appId: String,_ clientId: String,_ zendeskUrl: String,_ messagingId: String) throws {
+        Zendesk.initialize(withChannelKey: messagingId,
+                           messagingFactory: DefaultMessagingFactory()) { result in
+                if case let .failure(error) = result {
+                    print("Messaging did not initialize.\nError: \(error.localizedDescription)")
+                }
+            }
     }
 
     @objc public func setAnonymousIdentity(_ name: String,_ email: String) {
-        let identity = Identity.createAnonymous(name: name, email: email)
-        Zendesk.instance?.setIdentity(identity)
+        print("No anonimous users")
     }
 
     @objc public func setIdentity(_ token: String) {
-        let identity = Identity.createJwt(token: token)
-        Zendesk.instance?.setIdentity(identity)
-    }
-
-    @objc public func showUserTickets(_ viewCtrl: UIViewController?) {
-        DispatchQueue.main.async {
-            let requestListController = RequestUi.buildRequestList()
-            let navController = UINavigationController(rootViewController: requestListController)
-            viewCtrl?.present(navController, animated: true, completion: nil)
+        Zendesk.instance?.loginUser(with: token) { result in
+            switch result {
+            case .success(let user):
+                print("User: \(user)");
+            case .failure(let error):
+                print(error);
+            }
         }
     }
 
-    @objc public func openChat(_ viewCtrl: UIViewController?) throws {
+    @objc public func openChat(_ viewCtrl: UIViewController?) {
         DispatchQueue.main.async {
-            do {
-                let messagingConfiguration = MessagingConfiguration()
-                let answerBotEngine = try AnswerBotEngine.engine()
-                let supportEngine = try SupportEngine.engine()
-                let chatEngine = try ChatEngine.engine()
-                let viewController = try Messaging.instance.buildUI(engines: [answerBotEngine, chatEngine, supportEngine],
-                                                            configs: [messagingConfiguration])
-                
-                let navController = UINavigationController(rootViewController: viewController)
-                viewCtrl?.present(navController, animated: true)
-            } catch {
-                
-            }
+            guard let viewController = Zendesk.instance?.messaging?.messagingViewController() else { return }
+            let navController = UINavigationController(rootViewController: viewController)
+            viewCtrl?.present(navController, animated: true)
         }
     }
 }
