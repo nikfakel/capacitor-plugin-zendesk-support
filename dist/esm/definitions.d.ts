@@ -3,7 +3,6 @@ export interface ZendeskSupportPlugin {
     setAnonymousIdentity(options: AnonymousOptions): Promise<void>;
     setIdentity(option: IdentityOption): Promise<void>;
     openChat(): Promise<void>;
-    closeChat(): Promise<void>;
 }
 export interface InitializeOptions {
     zendeskUrl: string;

@@ -5,5 +5,4 @@ export declare class ZendeskSupportWeb extends WebPlugin implements ZendeskSuppo
     setAnonymousIdentity(options: AnonymousOptions): Promise<void>;
     setIdentity(option: IdentityOption): Promise<void>;
     openChat(): Promise<void>;
-    closeChat(): Promise<void>;
 }

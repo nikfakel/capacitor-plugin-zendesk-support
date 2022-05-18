@@ -54,9 +54,6 @@ export class ZendeskSupportWeb extends WebPlugin {
             console.log(error);
         }
     }
-    async closeChat() {
-        window.zE('messenger:set', 'zIndex', -999);
-    }
 }
 function waitForAddedNode(params) {
     new MutationObserver(function () {

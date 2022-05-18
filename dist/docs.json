@@ -68,16 +68,6 @@
         "docs": "",
         "complexTypes": [],
         "slug": "openchat"
-      },
-      {
-        "name": "closeChat",
-        "signature": "() => Promise<void>",
-        "parameters": [],
-        "returns": "Promise<void>",
-        "tags": [],
-        "docs": "",
-        "complexTypes": [],
-        "slug": "closechat"
       }
     ],
     "properties": []
