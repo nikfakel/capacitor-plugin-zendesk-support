@@ -1,70 +1,45 @@
 package com.websquare.plugins.zendesksupport
 
 import android.content.Context
-import com.zendesk.logger.Logger
-import zendesk.core.Zendesk
-import zendesk.support.Support
-import zendesk.core.AnonymousIdentity
-import zendesk.core.Identity
-import zendesk.core.JwtIdentity
-import zendesk.support.guide.HelpCenterConfiguration
-import zendesk.support.guide.HelpCenterActivity
-import zendesk.support.guide.ViewArticleActivity
-import zendesk.support.request.RequestConfiguration
-import zendesk.support.request.RequestActivity
-import zendesk.support.CustomField
-import zendesk.support.requestlist.RequestListActivity
-import zendesk.chat.Chat;
-import zendesk.chat.ChatEngine;
-import zendesk.messaging.MessagingActivity;
-import java.util.ArrayList
+import android.util.Log
+import zendesk.android.Zendesk
+import zendesk.messaging.android.DefaultMessagingFactory
 
 class ZendeskSupport {
-    fun openChat(context: Context) {
-        Chat.INSTANCE.init(context, "InqWFgdu4jxALOMqArAaONDLDZtFFmZV");
-        MessagingActivity.builder()
-            .withEngines(ChatEngine.engine())
-            .show(context);
-    }
+    fun initialize(context: Context?, url: String?, appId: String?, clientId: String?, androidChatId: String?, debugLog: Boolean) {
+        if (debugLog) Log.i("Initialized", "Done")
 
-    // initialize zendesk support sdk
-    fun initialize(context: Context?, url: String?, appId: String?, clientId: String?, debugLog: Boolean) {
-        Zendesk.INSTANCE.init(context!!, url!!, appId!!, clientId)
-        if (debugLog) Logger.setLoggable(true)
-        Support.INSTANCE.init(Zendesk.INSTANCE)
+        Zendesk.initialize(
+                context = context!!,
+                channelKey = androidChatId!!,
+                successCallback = { zendesk ->
+                    Log.i("IntegrationApplication", zendesk.toString())
+                    Log.i("IntegrationApplication", "Initialization successful")
+                },
+                failureCallback = { error ->
+                    // Tracking the cause of exceptions in your crash reporting dashboard will help to triage any unexpected failures in production
+                    Log.e("IntegrationApplication", "Initialization failed", error)
+                },
+                messagingFactory = DefaultMessagingFactory()
+        )
     }
 
     fun setAnonymousIdentity(name: String?, email: String?) {
-        val identity = AnonymousIdentity.Builder()
-                .withNameIdentifier(name)
-                .withEmailIdentifier(email)
-                .build()
-        Zendesk.INSTANCE.setIdentity(identity)
+        Log.i("Warning", "No anonymous identity")
     }
 
     fun setIdentity(token: String?) {
-        val identity: Identity = JwtIdentity(token)
-        Zendesk.INSTANCE.setIdentity(identity)
+        Zendesk.instance.loginUser(jwt = token!!,
+                successCallback = { user ->
+                    Log.i("User", user.toString())
+                },
+                failureCallback = { error ->
+                    Log.i("Error", error.toString())
+                }
+        )
     }
 
-    fun showHelpCenter(context: Context?, groupBy: String, groupIds: List<Long?>, labels: List<String?>) {
-        var builder = HelpCenterActivity.builder()
-        if ("category" == groupBy && groupIds.isNotEmpty()) {
-            builder = builder.withArticlesForCategoryIds(groupIds)
-        } else if ("section" == groupBy && groupIds.isNotEmpty()) {
-            builder = builder.withArticlesForSectionIds(groupIds)
-        }
-        if (labels.isNotEmpty()) {
-            builder = builder.withLabelNames(labels)
-        }
-        builder.show(context!!)
-    }
-
-    fun showHelpCenterArticle(context: Context?, articleId: String) {
-        ViewArticleActivity.builder(articleId.toLong()).show(context!!)
-    }
-
-    fun showUserTickets(context: Context?) {
-        RequestListActivity.builder().show(context!!)
+    fun openChat(context: Context) {
+        Zendesk.instance.messaging.showMessaging(context)
     }
 }

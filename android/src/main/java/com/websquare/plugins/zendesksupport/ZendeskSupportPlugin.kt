@@ -4,10 +4,7 @@ import com.getcapacitor.Plugin
 import com.getcapacitor.annotation.CapacitorPlugin
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.PluginCall
-import org.json.JSONArray
-import org.json.JSONException
 import java.lang.Exception
-import java.util.ArrayList
 
 @CapacitorPlugin(name = "ZendeskSupport")
 class ZendeskSupportPlugin : Plugin() {
@@ -17,9 +14,10 @@ class ZendeskSupportPlugin : Plugin() {
         val appId = call.getString("appId", "")
         val clientId = call.getString("clientId", "")
         val zendeskUrl = call.getString("zendeskUrl", "")
+        val androidChatId = call.getString("androidChatId", "")
         val debugLog = call.getBoolean("debugLog", false)
         try {
-            implementation.initialize(activity.applicationContext, zendeskUrl, appId, clientId, debugLog ?: false)
+            implementation.initialize(activity.applicationContext, zendeskUrl, appId, clientId, androidChatId, debugLog ?: false)
             call.resolve()
         } catch (e: Exception) {
             call.reject(e.message, e)
@@ -42,49 +40,8 @@ class ZendeskSupportPlugin : Plugin() {
     }
 
     @PluginMethod
-    fun showHelpCenter(call: PluginCall) {
-        val groupBy = call.getString("groupBy", "") ?: ""
-        var groupIds: List<Long?> = ArrayList()
-        var labels: List<String?> = ArrayList()
-        if (call.hasOption("groupIds")) {
-            groupIds = jsonArrayToList(call.getArray("groupIds"))
-        }
-        if (call.hasOption("labels")) {
-            labels = jsonArrayToList(call.getArray("labels"))
-        }
-        implementation.showHelpCenter(activity, groupBy, groupIds, labels)
-        call.resolve()
-    }
-
-    @PluginMethod
-    fun showHelpCenterArticle(call: PluginCall) {
-        val articleId = call.getString("articleId", "") ?: ""
-        implementation.showHelpCenterArticle(activity, articleId)
-        call.resolve()
-    }
-
-    @PluginMethod
     fun openChat(call: PluginCall) {
-        val chatId = call.getString("chatId", "")
         implementation.openChat(activity)
         call.resolve()
-    }
-
-    @PluginMethod
-    fun showUserTickets(call: PluginCall) {
-        implementation.showUserTickets(activity)
-        call.resolve()
-    }
-
-    private fun <T> jsonArrayToList(jsonArray: JSONArray): List<T> {
-        val arrayList: MutableList<T> = ArrayList()
-        for (i in 0 until jsonArray.length()) {
-            try {
-                arrayList.add((jsonArray[i] ?: "") as T)
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }
-        return arrayList
     }
 }
