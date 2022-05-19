@@ -81,27 +81,6 @@
       "methods": [],
       "properties": [
         {
-          "name": "zendeskUrl",
-          "tags": [],
-          "docs": "",
-          "complexTypes": [],
-          "type": "string"
-        },
-        {
-          "name": "appId",
-          "tags": [],
-          "docs": "",
-          "complexTypes": [],
-          "type": "string"
-        },
-        {
-          "name": "clientId",
-          "tags": [],
-          "docs": "",
-          "complexTypes": [],
-          "type": "string"
-        },
-        {
           "name": "iosChatId",
           "tags": [],
           "docs": "",

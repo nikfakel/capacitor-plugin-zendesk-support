@@ -5,9 +5,6 @@ export interface ZendeskSupportPlugin {
     openChat(): Promise<void>;
 }
 export interface InitializeOptions {
-    zendeskUrl: string;
-    appId: string;
-    clientId: string;
     iosChatId: string;
     androidChatId: string;
     webClientId: string;
